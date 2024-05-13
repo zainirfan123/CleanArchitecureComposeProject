@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication
+package com.example.mindsvalleyapplication.feature_channels.presentation.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
