@@ -1,7 +1,9 @@
 package com.example.mindsvalleyapplication.di
 
 import com.example.mindsvalleyapplication.feature_channels.data.data_source.ApiService
-import com.example.mindsvalleyapplication.feature_channels.domain.util.Constants
+import com.example.mindsvalleyapplication.feature_channels.common.Constants
+import com.example.mindsvalleyapplication.feature_channels.data.repository.ChannelsRepositoryImpl
+import com.example.mindsvalleyapplication.feature_channels.domain.repository.ChannelsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,6 +40,12 @@ object AppModule {
             .client(provideOkHttpClient()) // Use the custom OkHttpClient
             .build()
             .create(ApiService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun channelsRepository(api: ApiService): ChannelsRepository {
+        return  ChannelsRepositoryImpl(api)
     }
 
 

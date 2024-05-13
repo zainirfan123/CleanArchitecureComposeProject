@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.domain.util
+package com.example.mindsvalleyapplication.feature_channels.common
 
 sealed class Resource <T>(val data: T? = null,val message:String? = null){
     class Success<T>(data: T) : Resource<T>(data)
