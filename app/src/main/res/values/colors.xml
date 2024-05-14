@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="channel_bg">#23272f</color>
+    <color name="grey">#C1C1C1</color>
+    <color name="grey_secondary">#95989D</color>
+    <color name="chip_bg_color">#3a3d45</color>
 </resources>
