@@ -7,11 +7,11 @@ import androidx.room.Query
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import kotlinx.coroutines.flow.Flow
 
-@Dao
+//@Dao
 interface CategoryDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+   /* @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategories(categories: List<CategoriesResponseModel>)
 
     @Query("SELECT * FROM categories")
-    fun getAllCategories(): Flow<List<CategoriesResponseModel>>
+    fun getAllCategories(): Flow<List<CategoriesResponseModel>>*/
 }

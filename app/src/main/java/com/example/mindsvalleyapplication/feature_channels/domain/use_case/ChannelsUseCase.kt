@@ -10,10 +10,10 @@ import java.io.IOException
 import javax.inject.Inject
 
 class ChannelsUseCase @Inject constructor(private val repository: ChannelsRepository) {
-    operator fun invoke(): Flow<Resource<ChannelsResponseModel>>  = flow {
+    operator fun invoke(isFetchedFromRoom:Boolean): Flow<Resource<ChannelsResponseModel>>  = flow {
         try {
             emit(Resource.Loading())
-            val channelsResponse = repository.getChannels()
+            val channelsResponse = repository.getChannels(isFetchedFromRoom = isFetchedFromRoom)
             emit(Resource.Success(channelsResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

@@ -13,7 +13,7 @@ class EpisodesUseCase @Inject constructor(private val repository: ChannelsReposi
     operator fun invoke(): Flow<Resource<EpisodesResponseModel>>  = flow {
         try {
             emit(Resource.Loading())
-            val episodeResponse = repository.getEpisodes()
+            val episodeResponse = repository.getEpisodes(false)
             emit(Resource.Success(episodeResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

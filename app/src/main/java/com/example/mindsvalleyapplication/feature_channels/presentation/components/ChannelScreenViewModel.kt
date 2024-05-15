@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.presentation.channels
+package com.example.mindsvalleyapplication.feature_channels.presentation.components
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -36,13 +36,13 @@ constructor(
 
   init {
     callEpisodeApi()
-    callChannelApi()
+    callChannelApi(false)
     callCategoriesApi()
   }
 
-  fun callChannelApi() {
+  fun callChannelApi(isFetchedFromRoom:Boolean) {
     viewModelScope.launch {
-      channelUseCase.invoke().collect { result ->
+      channelUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _state.value = ChannelViewState(isLoading = true)

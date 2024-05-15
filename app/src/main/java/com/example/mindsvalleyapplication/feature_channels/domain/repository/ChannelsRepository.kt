@@ -7,7 +7,7 @@ import com.example.mindsvalleyapplication.feature_channels.domain.model.Episodes
 
 interface ChannelsRepository {
 
-  suspend fun getChannels(): ChannelsResponseModel
-  suspend fun getCategories(): CategoriesResponseModel
-  suspend fun getEpisodes(): EpisodesResponseModel
+  suspend fun getChannels(isFetchedFromRoom:Boolean): ChannelsResponseModel
+  suspend fun getCategories(isFetchedFromRoom:Boolean): CategoriesResponseModel
+  suspend fun getEpisodes(isFetchedFromRoom:Boolean): EpisodesResponseModel
 }

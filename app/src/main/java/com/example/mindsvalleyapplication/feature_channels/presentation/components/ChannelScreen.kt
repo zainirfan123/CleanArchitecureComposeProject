@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.presentation.channels
+package com.example.mindsvalleyapplication.feature_channels.presentation.components
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -22,12 +22,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.feature_channels.presentation.helper.AppsFontUtils
+import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils
 import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.CustomTextView
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.ErrorScreen
 import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.Divider
+import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.ErrorScreen
 import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.SetChannels
 import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.SetHorizontalItems
 import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.ShowCategories
+import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.isInternetConnected
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -44,7 +46,7 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
   val channel = viewModel.state.value.response
   val episodes = viewModel.episodeState.value.response?.data
   val categories = viewModel.categoriesState.value.response?.data
-
+   val context =  LocalContext.current
   Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.channel_bg))) {
     when {
       !viewModel.state.value.error.isNullOrEmpty() -> {
@@ -72,7 +74,7 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = {
-          viewModel.callChannelApi()
+          viewModel.callChannelApi(true)
           viewModel.callEpisodeApi()
           viewModel.callCategoriesApi()
           // After fetching data, set isRefreshing to false
@@ -110,31 +112,35 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
             item { Divider() }
             item {
               channel?.data?.channels?.forEach {
-                SetChannels(
-                    context = LocalContext.current,
-                    list =
-                        viewModel.mapWholeChannelResponse(
-                            channel = it,
-                            numOfEpisodes =
-                                if (it.series.isNotEmpty()) it.series.size.toString()
-                                else it.latestMedia.size.toString()))
+                  it?.let { it1 ->
+                      viewModel.mapWholeChannelResponse(
+                          channel = it1,
+                          numOfEpisodes =
+                          if (it.series.isNotEmpty()) it.series.size.toString()
+                          else it.latestMedia.size.toString())
+                  }?.let { it2 ->
+                      SetChannels(
+                          context = LocalContext.current,
+                          list =
+                          it2
+                      )
+                  }
               }
             }
 
             item {
-                CustomTextView(
-                    modifier = Modifier.padding(start = 10.dp),
-                    text = stringResource(id = R.string.browse_by_categories),
-                    textSize = 20,
-                    textColor = colorResource(id = R.color.grey_secondary),
-                    fontFamily = AppsFontUtils.fontBold,
-                    fontWeight = FontWeight(weight = 800),
-                    letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
+              CustomTextView(
+                  modifier = Modifier.padding(start = 10.dp),
+                  text = stringResource(id = R.string.browse_by_categories),
+                  textSize = 20,
+                  textColor = colorResource(id = R.color.grey_secondary),
+                  fontFamily = AppsFontUtils.fontBold,
+                  fontWeight = FontWeight(weight = 800),
+                  letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
-                Spacer(modifier = Modifier.height(10.dp))
-                ShowCategories(viewModel.mapCategoriesResponse(categories?.categories))
-                Spacer(modifier = Modifier.height(30.dp))
-
+              Spacer(modifier = Modifier.height(10.dp))
+              ShowCategories(viewModel.mapCategoriesResponse(categories?.categories))
+              Spacer(modifier = Modifier.height(30.dp))
             }
           }
         }

@@ -1,30 +1,15 @@
 package com.example.mindsvalleyapplication.feature_channels.data.data_source
 
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsEntity
+import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
 
-/*@Database(
-    entities =
-        [Category::class],
-    version = 3)*/
+@Database(entities = [ChannelsResponseModel::class], version = 3)
+@TypeConverters(RoomTypeConverter::class)
 abstract class ChannelsDatabase : RoomDatabase() {
-
-  /*abstract fun categoryDao(): CategoryDao
-
-  abstract fun channelDao(): ChannelDao
-
-  companion object {
-    @Volatile private var INSTANCE: ChannelsDatabase? = null
-
-    fun getInstance(context: Context): ChannelsDatabase {
-      return INSTANCE
-          ?: synchronized(this) {
-            val instance =
-                Room.databaseBuilder(
-                        context.applicationContext, ChannelsDatabase::class.java, "app_database")
-                    .build()
-            INSTANCE = instance
-            instance
-          }
-    }
-  }*/
+    abstract fun channelDao(): ChannelDao
 }

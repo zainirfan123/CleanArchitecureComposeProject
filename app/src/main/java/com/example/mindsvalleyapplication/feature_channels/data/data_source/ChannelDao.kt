@@ -4,15 +4,14 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsEntity
 import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ChannelDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertChannels(channels: List<ChannelsResponseModel>)
+    suspend fun insert(channelsResponseModel: ChannelsResponseModel)
 
-    @Query("SELECT * FROM channels")
-    fun getAllChannels(): List<ChannelsResponseModel>
+    @Query("SELECT * FROM channel_data")
+    suspend fun getAllChannels(): ChannelsResponseModel?
 }

@@ -1,7 +1,11 @@
 package com.example.mindsvalleyapplication.di
 
+import android.app.Application
+import android.content.Context
+import androidx.room.Room
 import com.example.mindsvalleyapplication.feature_channels.data.data_source.ApiService
 import com.example.mindsvalleyapplication.feature_channels.common.Constants
+import com.example.mindsvalleyapplication.feature_channels.data.data_source.ChannelsDatabase
 import com.example.mindsvalleyapplication.feature_channels.data.repository.ChannelsRepositoryImpl
 import com.example.mindsvalleyapplication.feature_channels.domain.repository.ChannelsRepository
 import dagger.Module
@@ -44,8 +48,17 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun channelsRepository(api: ApiService): ChannelsRepository {
-        return  ChannelsRepositoryImpl(api)
+    fun provideChannelsDatabase(app: Application): ChannelsDatabase {
+        return Room.databaseBuilder(
+            app,
+            ChannelsDatabase::class.java, "app_database"
+        ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun channelsRepository(api: ApiService,database:ChannelsDatabase): ChannelsRepository {
+        return  ChannelsRepositoryImpl(api, database)
     }
 
 
