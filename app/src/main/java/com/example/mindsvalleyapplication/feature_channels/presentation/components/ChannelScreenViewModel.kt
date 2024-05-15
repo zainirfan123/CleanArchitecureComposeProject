@@ -35,12 +35,12 @@ constructor(
   val categoriesState: State<CategoriesViewState> = _categoriesState
 
   init {
-    callEpisodeApi()
-    callChannelApi(false)
-    callCategoriesApi()
+    callEpisodeApi(isFetchedFromRoom = false)
+    callChannelApi(isFetchedFromRoom = false)
+    callCategoriesApi(isFetchedFromRoom = false)
   }
 
-  fun callChannelApi(isFetchedFromRoom:Boolean) {
+  fun callChannelApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       channelUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
@@ -59,9 +59,9 @@ constructor(
     }
   }
 
-  fun callEpisodeApi() {
+  fun callEpisodeApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      episodesUseCase.invoke().collect { result ->
+      episodesUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _episodeState.value = EpisodeViewState(isLoading = true)
@@ -78,9 +78,9 @@ constructor(
     }
   }
 
-  fun callCategoriesApi() {
+  fun callCategoriesApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      categoriesUseCase.invoke().collect { result ->
+      categoriesUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _categoriesState.value = CategoriesViewState(isLoading = true)
@@ -120,7 +120,9 @@ constructor(
       episodes.map {
         list.add(
             HorizontalItemModel(
-                title = it.channel.title, subTitle = it.title, image = it.coverAsset.url))
+                title = it?.channel?.title ?: "",
+                subTitle = it?.title ?: "",
+                image = it?.coverAsset?.url ?: ""))
       }
     }
     return list

@@ -289,8 +289,6 @@ object ComposeUtils {
 
 
     fun isInternetConnected(context: Context): Boolean {
-        // Remember the context and only update when the context changes
-
         // Access the ConnectivityManager
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

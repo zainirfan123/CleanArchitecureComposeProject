@@ -75,8 +75,8 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
         state = swipeRefreshState,
         onRefresh = {
           viewModel.callChannelApi(true)
-          viewModel.callEpisodeApi()
-          viewModel.callCategoriesApi()
+          viewModel.callEpisodeApi(true)
+          viewModel.callCategoriesApi(true)
           // After fetching data, set isRefreshing to false
           // (either in ViewModel after successful API calls or after handling errors)
         }) {
@@ -139,7 +139,9 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
                   letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
               Spacer(modifier = Modifier.height(10.dp))
-              ShowCategories(viewModel.mapCategoriesResponse(categories?.categories))
+                categories?.categories?.let {
+              ShowCategories(viewModel.mapCategoriesResponse(it))
+              }
               Spacer(modifier = Modifier.height(30.dp))
             }
           }

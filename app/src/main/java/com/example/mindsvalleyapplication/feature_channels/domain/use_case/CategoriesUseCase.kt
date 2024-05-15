@@ -11,10 +11,10 @@ import java.io.IOException
 import javax.inject.Inject
 
 class CategoriesUseCase @Inject constructor(private val repository: ChannelsRepository) {
-    operator fun invoke(): Flow<Resource<CategoriesResponseModel>>  = flow {
+    operator fun invoke(isFetchFromDatabase: Boolean): Flow<Resource<CategoriesResponseModel>>  = flow {
         try {
             emit(Resource.Loading())
-            val categoriesResponse = repository.getCategories(false)
+            val categoriesResponse = repository.getCategories(isFetchFromDatabase)
             emit(Resource.Success(categoriesResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

@@ -6,13 +6,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
+import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface CategoryDao {
+interface EpisodesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategories(categories: CategoriesResponseModel)
+    suspend fun insertEpisodes(episodes:EpisodesResponseModel)
 
-    @Query("SELECT * FROM categories")
-    fun getAllCategories(): CategoriesResponseModel?
-
+    @Query("SELECT * FROM episodes")
+    fun getAllEpisodes(): EpisodesResponseModel?
 }

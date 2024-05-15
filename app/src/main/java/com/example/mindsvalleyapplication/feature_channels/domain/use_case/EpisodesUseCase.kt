@@ -1,6 +1,7 @@
 package com.example.mindsvalleyapplication.feature_channels.domain.use_case
 
 import com.example.mindsvalleyapplication.feature_channels.common.Resource
+import com.example.mindsvalleyapplication.feature_channels.data.data_source.ChannelsDatabase
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.repository.ChannelsRepository
 import kotlinx.coroutines.flow.Flow
@@ -10,10 +11,10 @@ import java.io.IOException
 import javax.inject.Inject
 
 class EpisodesUseCase @Inject constructor(private val repository: ChannelsRepository) {
-    operator fun invoke(): Flow<Resource<EpisodesResponseModel>>  = flow {
+    operator fun invoke(isFetchFromDatabase: Boolean): Flow<Resource<EpisodesResponseModel>>  = flow {
         try {
             emit(Resource.Loading())
-            val episodeResponse = repository.getEpisodes(false)
+            val episodeResponse = repository.getEpisodes(isFetchFromDatabase)
             emit(Resource.Success(episodeResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

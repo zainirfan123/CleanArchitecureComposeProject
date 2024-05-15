@@ -1,4 +1,5 @@
 package com.example.mindsvalleyapplication.feature_channels.data.repository
+
 import com.example.mindsvalleyapplication.feature_channels.data.data_source.ApiService
 import com.example.mindsvalleyapplication.feature_channels.data.data_source.ChannelsDatabase
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
@@ -6,25 +7,41 @@ import com.example.mindsvalleyapplication.feature_channels.domain.model.Channels
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.repository.ChannelsRepository
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-class ChannelsRepositoryImpl @Inject constructor(private val api: ApiService,private val channelsDatabase: ChannelsDatabase
-) : ChannelsRepository {
+class ChannelsRepositoryImpl
+@Inject
+constructor(private val api: ApiService, private val channelsDatabase: ChannelsDatabase) :
+    ChannelsRepository {
 
-  override suspend fun getChannels(isFetchedFromRoom:Boolean): ChannelsResponseModel {
+  override suspend fun getChannels(isFetchedFromRoom: Boolean): ChannelsResponseModel {
     return if (isFetchedFromRoom) {
       // Fetch channels from Room
-      return channelsDatabase.channelDao().getAllChannels()!!
+      withContext(Dispatchers.IO) { channelsDatabase.channelDao().getAllChannels()!! }
     } else {
       channelsDatabase.channelDao().insert(api.getChannels())
-      return api.getChannels()
+      api.getChannels()
     }
   }
 
   override suspend fun getCategories(isFetchedFromRoom: Boolean): CategoriesResponseModel {
-    return api.getCategories()
+    return if (isFetchedFromRoom) {
+      // Fetch categories from Room
+      withContext(Dispatchers.IO) { channelsDatabase.categoryDao().getAllCategories()!! }
+    } else {
+      channelsDatabase.categoryDao().insertCategories(api.getCategories())
+      api.getCategories()
+    }
   }
 
-  override suspend fun getEpisodes(isFetchedFromRoom:Boolean): EpisodesResponseModel {
-    return api.getNewEpisodes()
+  override suspend fun getEpisodes(isFetchedFromRoom: Boolean): EpisodesResponseModel {
+    return if (isFetchedFromRoom) {
+      // Fetch episodes from Room
+      withContext(Dispatchers.IO) { channelsDatabase.episodeDao().getAllEpisodes()!! }
+    } else {
+      channelsDatabase.episodeDao().insertEpisodes(api.getNewEpisodes())
+      api.getNewEpisodes()
+    }
   }
 }
