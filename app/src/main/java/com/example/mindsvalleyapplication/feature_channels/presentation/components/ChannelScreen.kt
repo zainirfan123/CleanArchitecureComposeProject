@@ -119,11 +119,7 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
                           if (it.series.isNotEmpty()) it.series.size.toString()
                           else it.latestMedia.size.toString())
                   }?.let { it2 ->
-                      SetChannels(
-                          context = LocalContext.current,
-                          list =
-                          it2
-                      )
+                      SetChannels(list = it2)
                   }
               }
             }

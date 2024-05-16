@@ -134,18 +134,10 @@ object ComposeUtils {
   }
 
   @Composable
-  fun SetChannels(context: Context, list: List<CustomizeResponseModel>) {
+  fun SetChannels(list: List<CustomizeResponseModel>) {
     Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
       list.forEach { item ->
         Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
-          val drawableResourceId = getDrawableResourceIdFromSlug(item.slug, context)
-          val painter =
-              if (drawableResourceId != null && drawableResourceId != 0) {
-                painterResource(id = drawableResourceId)
-              } else {
-                Log.e("Drawable", "Drawable resource not found for slug: ${item.slug}")
-                painterResource(id = R.drawable.mind_valley_mentoring)
-              }
           titleToDrawableMap[item.title]
               ?.let { painterResource(id = it) }
               ?.let {
@@ -184,20 +176,6 @@ object ComposeUtils {
         Divider()
       }
     }
-  }
-
-  private fun getDrawableResourceIdFromSlug(slug: String?, context: Context): Int {
-    // If the slug is null, return the default resource
-    if (slug == null) {
-      Log.e("Drawable", "Slug is null, returning default resource")
-      return R.drawable.mind_valley_mentoring
-    }
-    // Get the resource ID of the drawable dynamically
-    val resourceId = context.resources.getIdentifier(slug, "drawable", context.packageName)
-    if (resourceId == 0) {
-      Log.e("Drawable", "Drawable resource not found for slug: $slug")
-    }
-    return resourceId
   }
 
   // Define your mapping of titles to drawable resource names
