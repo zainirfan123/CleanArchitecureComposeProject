@@ -15,6 +15,10 @@ class CategoriesUseCase @Inject constructor(private val repository: ChannelsRepo
         try {
             emit(Resource.Loading())
             val categoriesResponse = repository.getCategories(isFetchFromDatabase)
+            if (categoriesResponse.data.categories.isNullOrEmpty()){
+                emit(Resource.Error("No data found!"))
+                return@flow
+            }
             emit(Resource.Success(categoriesResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

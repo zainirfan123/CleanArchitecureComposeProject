@@ -14,6 +14,10 @@ class ChannelsUseCase @Inject constructor(private val repository: ChannelsReposi
         try {
             emit(Resource.Loading())
             val channelsResponse = repository.getChannels(isFetchedFromRoom = isFetchedFromRoom)
+            if (channelsResponse.data.channels.isNullOrEmpty()){
+                emit(Resource.Error("No data found!"))
+                return@flow
+            }
             emit(Resource.Success(channelsResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

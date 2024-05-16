@@ -15,6 +15,10 @@ class EpisodesUseCase @Inject constructor(private val repository: ChannelsReposi
         try {
             emit(Resource.Loading())
             val episodeResponse = repository.getEpisodes(isFetchFromDatabase)
+            if (episodeResponse.data.media.isNullOrEmpty()){
+                emit(Resource.Error("No data found!"))
+                return@flow
+            }
             emit(Resource.Success(episodeResponse))
         }catch (e:HttpException){
             emit(Resource.Error(e.localizedMessage?:" An Unexpected error occurred."))

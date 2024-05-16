@@ -58,9 +58,9 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = {
-          viewModel.callChannelApi(context.isInternetConnected())
-          viewModel.callEpisodeApi(context.isInternetConnected())
-          viewModel.callCategoriesApi(context.isInternetConnected())
+          viewModel.callChannelApi(isFetchedFromRoom = context.isInternetConnected())
+          viewModel.callEpisodeApi(isFetchedFromRoom = context.isInternetConnected())
+          viewModel.callCategoriesApi(isFetchedFromRoom = context.isInternetConnected())
           // After fetching data, set isRefreshing to false
           // (either in ViewModel after successful API calls or after handling errors)
         }) {
