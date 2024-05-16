@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.presentation.helper
+package com.example.mindsvalleyapplication.utils
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

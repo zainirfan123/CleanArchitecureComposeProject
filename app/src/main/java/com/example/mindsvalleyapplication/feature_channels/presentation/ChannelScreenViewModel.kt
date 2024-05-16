@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.presentation.components
+package com.example.mindsvalleyapplication.feature_channels.presentation
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -42,7 +42,7 @@ constructor(
 
   fun callChannelApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      channelUseCase.invoke(isFetchedFromRoom).collect { result ->
+      channelUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _state.value = ChannelViewState(isLoading = true)
@@ -61,7 +61,7 @@ constructor(
 
   fun callEpisodeApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      episodesUseCase.invoke(isFetchedFromRoom).collect { result ->
+      episodesUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _episodeState.value = EpisodeViewState(isLoading = true)
@@ -80,7 +80,7 @@ constructor(
 
   fun callCategoriesApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      categoriesUseCase.invoke(isFetchedFromRoom).collect { result ->
+      categoriesUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _categoriesState.value = CategoriesViewState(isLoading = true)

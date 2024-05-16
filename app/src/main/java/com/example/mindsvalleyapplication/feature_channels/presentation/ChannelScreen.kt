@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.presentation.components
+package com.example.mindsvalleyapplication.feature_channels.presentation
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -21,15 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.mindsvalleyapplication.R
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.AppsFontUtils
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.CustomTextView
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.Divider
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.ErrorScreen
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.SetChannels
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.SetHorizontalItems
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.ShowCategories
-import com.example.mindsvalleyapplication.feature_channels.presentation.helper.ComposeUtils.isInternetConnected
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.CategoryItems.SetCategoryItems
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.ChannelItems.SetCourseOrSeriesItems
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.CustomTextView
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.Divider
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.ErrorScreen
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.RowItems.SetRowItems
+import com.example.mindsvalleyapplication.utils.AppsFontUtils
+import com.example.mindsvalleyapplication.utils.Extensions.isInternetConnected
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -38,33 +37,18 @@ fun ChannelScreen(
     navController: NavController,
     viewModel: ChannelScreenViewModel = hiltViewModel()
 ) {
-  setUpChannelUI(viewModel = viewModel)
+  InitializeChannelUI(viewModel = viewModel)
 }
 
 @Composable
-private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
+private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
   val channel = viewModel.state.value.response
   val episodes = viewModel.episodeState.value.response?.data
   val categories = viewModel.categoriesState.value.response?.data
-   val context =  LocalContext.current
+  val context = LocalContext.current
   Box(modifier = Modifier.fillMaxSize().background(colorResource(id = R.color.channel_bg))) {
-    when {
-      !viewModel.state.value.error.isNullOrEmpty() -> {
-        // Handle error state
-        Log.d("Error: ", viewModel.state.value.error)
-        ErrorScreen(errorMessage = viewModel.state.value.error)
-      }
-      !viewModel.episodeState.value.error.isNullOrEmpty() -> {
-        // Handle error state
-        Log.d("Error: ", viewModel.episodeState.value.error)
-        ErrorScreen(errorMessage = viewModel.episodeState.value.error)
-      }
-      !viewModel.categoriesState.value.error.isNullOrEmpty() -> {
-        // Handle error state
-        Log.d("Error: ", viewModel.categoriesState.value.error)
-        ErrorScreen(errorMessage = viewModel.categoriesState.value.error)
-      }
-    }
+    // check error states
+    CheckErrorStates(viewModel)
     val swipeRefreshState =
         rememberSwipeRefreshState(
             isRefreshing =
@@ -74,9 +58,9 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = {
-          viewModel.callChannelApi(true)
-          viewModel.callEpisodeApi(true)
-          viewModel.callCategoriesApi(true)
+          viewModel.callChannelApi(context.isInternetConnected())
+          viewModel.callEpisodeApi(context.isInternetConnected())
+          viewModel.callCategoriesApi(context.isInternetConnected())
           // After fetching data, set isRefreshing to false
           // (either in ViewModel after successful API calls or after handling errors)
         }) {
@@ -106,21 +90,20 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
               Spacer(modifier = Modifier.height(20.dp))
             }
             item { // new episodes
-              SetHorizontalItems(list = viewModel.mapEpisodeResponse(episodes))
+              SetRowItems(list = viewModel.mapEpisodeResponse(episodes))
               Spacer(modifier = Modifier.height(20.dp))
             }
             item { Divider() }
             item {
               channel?.data?.channels?.forEach {
-                  it?.let { it1 ->
+                it?.let { it1 ->
                       viewModel.mapWholeChannelResponse(
                           channel = it1,
                           numOfEpisodes =
-                          if (it.series.isNotEmpty()) it.series.size.toString()
-                          else it.latestMedia.size.toString())
-                  }?.let { it2 ->
-                      SetChannels(list = it2)
-                  }
+                              if (it.series.isNotEmpty()) it.series.size.toString()
+                              else it.latestMedia.size.toString())
+                    }
+                    ?.let { it2 -> SetCourseOrSeriesItems(list = it2) }
               }
             }
 
@@ -135,12 +118,31 @@ private fun setUpChannelUI(viewModel: ChannelScreenViewModel) {
                   letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
               Spacer(modifier = Modifier.height(10.dp))
-                categories?.categories?.let {
-              ShowCategories(viewModel.mapCategoriesResponse(it))
-              }
+              categories?.categories?.let { SetCategoryItems(viewModel.mapCategoriesResponse(it)) }
               Spacer(modifier = Modifier.height(30.dp))
             }
           }
         }
+  }
+}
+
+@Composable
+fun CheckErrorStates(viewModel: ChannelScreenViewModel) {
+  when {
+    viewModel.state.value.error.isNotEmpty() -> {
+      // Handle error state
+      Log.d("Error: ", viewModel.state.value.error)
+      ErrorScreen(errorMessage = viewModel.state.value.error)
+    }
+    viewModel.episodeState.value.error.isNotEmpty() -> {
+      // Handle error state
+      Log.d("Error: ", viewModel.episodeState.value.error)
+      ErrorScreen(errorMessage = viewModel.episodeState.value.error)
+    }
+    viewModel.categoriesState.value.error.isNotEmpty() -> {
+      // Handle error state
+      Log.d("Error: ", viewModel.categoriesState.value.error)
+      ErrorScreen(errorMessage = viewModel.categoriesState.value.error)
+    }
   }
 }

@@ -8,7 +8,7 @@ import com.example.mindsvalleyapplication.feature_channels.domain.model.Horizont
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.CategoriesUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.ChannelsUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.EpisodesUseCase
-import com.example.mindsvalleyapplication.feature_channels.presentation.components.ChannelScreenViewModel
+import com.example.mindsvalleyapplication.feature_channels.presentation.ChannelScreenViewModel
 import com.example.testproject2024.coroutine_rule.MainDispatcherRule
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking

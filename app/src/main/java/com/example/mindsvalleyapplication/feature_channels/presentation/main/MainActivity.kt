@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.mindsvalleyapplication.feature_channels.presentation.components.ChannelScreen
+import com.example.mindsvalleyapplication.feature_channels.presentation.ChannelScreen
 import com.example.mindsvalleyapplication.feature_channels.presentation.util.Screen
 import com.example.mindsvalleyapplication.ui.theme.MindsValleyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
