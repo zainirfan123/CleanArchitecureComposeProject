@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.LoadImage.ImageWithLoader
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
 object RowItems {
@@ -45,13 +46,9 @@ object RowItems {
         Column(
             modifier = Modifier.width(152.dp).wrapContentHeight(),
             horizontalAlignment = Alignment.Start) {
-            val painter = rememberImagePainter(item.image)
 
-            Image(
-                modifier = Modifier.fillMaxWidth().height(228.dp).clip(RoundedCornerShape(10.dp)),
-                painter = painter,
-                contentDescription = item.title,
-                contentScale = ContentScale.Crop)
+            ImageWithLoader(item.image,Modifier.fillMaxWidth().height(228.dp).clip(RoundedCornerShape(10.dp)))
+
             Spacer(modifier = Modifier.height(10.dp))
 
             ComposeUtils.CustomTextView(

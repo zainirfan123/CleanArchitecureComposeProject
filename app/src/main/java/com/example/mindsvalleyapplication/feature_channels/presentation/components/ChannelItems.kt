@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CustomizeChannelResponseModel
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.RowItems.SetRowItems
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
 object ChannelItems {
@@ -67,7 +68,7 @@ object ChannelItems {
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                RowItems.SetRowItems(list = item.items)
+                SetRowItems(list = item.items)
                 ComposeUtils.Divider()
             }
         }

@@ -2,6 +2,7 @@ package com.example.mindsvalleyapplication.feature_channel
 
 import com.example.mindsvalleyapplication.feature_channel.repository.FakeChannelRepository
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CoverAsset
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
@@ -11,7 +12,6 @@ import com.example.mindsvalleyapplication.feature_channels.domain.use_case.Episo
 import com.example.mindsvalleyapplication.feature_channels.presentation.ChannelScreenViewModel
 import com.example.testproject2024.coroutine_rule.MainDispatcherRule
 import junit.framework.TestCase
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
 import org.junit.Before
@@ -73,77 +73,106 @@ class ChannelScreenViewModelTest {
   }
 
   @Test
-  fun `test channels series list comes from server`() = runBlocking{
+  fun `test channels series list comes from server`() = runTest {
     // Mock successful response
     val channelResponse = fakeChannelRepository.channelResponseModel
     // Trigger API call
     viewModel.callChannelApi(true)
 
-    val hasSeries = channelResponse.data.channels?.any { channel ->
-      // Your condition to check if the promotion has an image
-      // For example, assuming promotion has an image URL
-      channel?.series != null
-    }
+    val hasSeries = channelResponse.data.channels?.any { channel -> channel?.series != null }
 
-    // Assert that at least one promotion has an image
     TestCase.assertTrue(hasSeries ?: false)
   }
 
   @Test
-  fun `test channels latest media list comes from server`() = runBlocking{
+  fun `test channels latest media list comes from server`() = runTest {
     // Mock successful response
     val channelResponse = fakeChannelRepository.channelResponseModel
     // Trigger API call
     viewModel.callChannelApi(true)
 
-    val hasLatestMedia = channelResponse.data.channels?.any { channel ->
-      // Your condition to check if the promotion has an image
-      // For example, assuming promotion has an image URL
-      channel?.latestMedia != null
-    }
+    val hasLatestMedia =
+        channelResponse.data.channels?.any { channel -> channel?.latestMedia != null }
 
-    // Assert that at least one promotion has an image
     TestCase.assertTrue(hasLatestMedia ?: false)
   }
 
+  @Test
+  fun `test getSeriesOrCourseList when series is not empty`() {
+    // Arrange
+    val data =
+        ChannelsResponseModel.Data.Channel(
+            coverAsset = fakeChannelRepository.coverAsset,
+            iconAsset = fakeChannelRepository.iconAsset,
+            id = "",
+            mediaCount = 0,
+            slug = "",
+            title = "",
+            series = fakeChannelRepository.getDummySeriesList(),
+            latestMedia = emptyList())
+
+    // Act
+    val result = viewModel.getSeriesOrCourseList(data)
+
+    // Assert
+    assertEquals(2, result.size)
+    assertEquals("series", result[0].title)
+  }
+
+  @Test
+  fun `test getSeriesOrCourseList when series is empty`() {
+    // Arrange
+    val data =
+        ChannelsResponseModel.Data.Channel(
+            coverAsset = fakeChannelRepository.coverAsset,
+            iconAsset = fakeChannelRepository.iconAsset,
+            id = "",
+            mediaCount = 0,
+            slug = "",
+            title = "",
+            series = emptyList(),
+            latestMedia = fakeChannelRepository.getDummyLatestMediaList())
+
+    // Act
+    val result = viewModel.getSeriesOrCourseList(data)
+
+    // Assert
+    assertEquals(2, result.size)
+    assertEquals("media", result[0].title)
+  }
 
   @Test
   fun `mapCategoriesResponse maps list correctly`() {
     // Given
-    val inputList = listOf(
-      CategoriesResponseModel.Data.Category("Category1"),
-      CategoriesResponseModel.Data.Category("Category2"),
-      CategoriesResponseModel.Data.Category("Category3"),
-      CategoriesResponseModel.Data.Category("Category4")
-    )
+    val inputList =
+        listOf(
+            CategoriesResponseModel.Data.Category("Category1"),
+            CategoriesResponseModel.Data.Category("Category2"),
+            CategoriesResponseModel.Data.Category("Category3"),
+            CategoriesResponseModel.Data.Category("Category4"))
 
     // When
     val result = viewModel.mapCategoriesResponse(inputList)
 
     // Then
-    val expectedList = listOf(
-      Pair("Category1", "Category2"),
-      Pair("Category3", "Category4")
-    )
-    assertEquals(expectedList, result) }
+    val expectedList = listOf(Pair("Category1", "Category2"), Pair("Category3", "Category4"))
+    assertEquals(expectedList, result)
+  }
 
   @Test
   fun `mapCategoriesResponse handles odd-sized list`() {
     // Given
-    val inputList = listOf(
-      CategoriesResponseModel.Data.Category("Category1"),
-      CategoriesResponseModel.Data.Category("Category2"),
-      CategoriesResponseModel.Data.Category("Category3")
-    )
+    val inputList =
+        listOf(
+            CategoriesResponseModel.Data.Category("Category1"),
+            CategoriesResponseModel.Data.Category("Category2"),
+            CategoriesResponseModel.Data.Category("Category3"))
 
     // When
     val result = viewModel.mapCategoriesResponse(inputList)
 
     // Then
-    val expectedList = listOf(
-      Pair("Category1", "Category2"),
-      Pair("Category3", null)
-    )
+    val expectedList = listOf(Pair("Category1", "Category2"), Pair("Category3", null))
     assertEquals(expectedList, result)
   }
 
@@ -172,32 +201,31 @@ class ChannelScreenViewModelTest {
     assertEquals(emptyList<Pair<String, String?>>(), result)
   }
 
-
   @Test
   fun `mapEpisodeResponse maps data correctly`() {
     // Given
-    val episode1 = EpisodesResponseModel.Data.Media(
-      channel = EpisodesResponseModel.Data.Media.Channel(title = "Channel 1"),
-      title = "Episode 1",
-      coverAsset = CoverAsset(url = "https://example.com/episode1.jpg"),
-      type = "type 1"
-    )
-    val episode2 = EpisodesResponseModel.Data.Media(
-      channel = EpisodesResponseModel.Data.Media.Channel(title = "Channel 2"),
-      title = "Episode 2",
-      coverAsset = CoverAsset(url = "https://example.com/episode2.jpg"),
-      type = "type 2"
-    )
+    val episode1 =
+        EpisodesResponseModel.Data.Media(
+            channel = EpisodesResponseModel.Data.Media.Channel(title = "Channel 1"),
+            title = "Episode 1",
+            coverAsset = CoverAsset(url = "https://example.com/episode1.jpg"),
+            type = "type 1")
+    val episode2 =
+        EpisodesResponseModel.Data.Media(
+            channel = EpisodesResponseModel.Data.Media.Channel(title = "Channel 2"),
+            title = "Episode 2",
+            coverAsset = CoverAsset(url = "https://example.com/episode2.jpg"),
+            type = "type 2")
     val data = EpisodesResponseModel.Data(listOf(episode1, episode2))
 
     // When
     val result = viewModel.mapEpisodeResponse(data)
 
     // Then
-    val expectedList = listOf(
-      GenericRowItemModel(subTitle = "Channel 1", title = "Episode 1", image = "https://example.com/episode1.jpg"),
-      GenericRowItemModel(subTitle = "Channel 2", title =  "Episode 2", image =  "https://example.com/episode2.jpg")
-    )
+    val expectedList =
+        listOf(
+            GenericRowItemModel("https://example.com/episode1.jpg", "Channel 1", "Episode 1"),
+            GenericRowItemModel("https://example.com/episode2.jpg", "Channel 2", "Episode 2"))
     assertEquals(expectedList, result)
   }
 
@@ -224,5 +252,4 @@ class ChannelScreenViewModelTest {
     // Then
     assertEquals(emptyList<GenericRowItemModel>(), result)
   }
-
 }

@@ -97,7 +97,7 @@ constructor(
     }
   }
 
-  private fun getSeriesOrCourseList(
+   fun getSeriesOrCourseList(
       data: ChannelsResponseModel.Data.Channel
   ): List<GenericRowItemModel> {
     val list = arrayListOf<GenericRowItemModel>()
