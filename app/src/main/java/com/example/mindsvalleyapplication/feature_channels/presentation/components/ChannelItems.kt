@@ -20,14 +20,14 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.example.mindsvalleyapplication.R
-import com.example.mindsvalleyapplication.feature_channels.domain.model.CustomizeResponseModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.CustomizeChannelResponseModel
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
 object ChannelItems {
 
 
     @Composable
-    fun SetCourseOrSeriesItems(list: List<CustomizeResponseModel>) {
+    fun SetCourseOrSeriesItems(list: List<CustomizeChannelResponseModel>) {
         Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
             list.forEach { item ->
                 Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {

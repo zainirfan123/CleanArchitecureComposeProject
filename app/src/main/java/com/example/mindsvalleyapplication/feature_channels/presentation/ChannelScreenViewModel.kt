@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import com.example.mindsvalleyapplication.feature_channels.common.Resource
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
-import com.example.mindsvalleyapplication.feature_channels.domain.model.CustomizeResponseModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.CustomizeChannelResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
-import com.example.mindsvalleyapplication.feature_channels.domain.model.HorizontalItemModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.CategoriesUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.ChannelsUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.EpisodesUseCase
@@ -99,27 +99,27 @@ constructor(
 
   private fun getSeriesOrCourseList(
       data: ChannelsResponseModel.Data.Channel
-  ): List<HorizontalItemModel> {
-    val list = arrayListOf<HorizontalItemModel>()
+  ): List<GenericRowItemModel> {
+    val list = arrayListOf<GenericRowItemModel>()
     if (data.series.isNotEmpty()) {
       data.series.map {
-        list.add(HorizontalItemModel(title = it.title, subTitle = "", image = it.coverAsset.url))
+        list.add(GenericRowItemModel(title = it.title, subTitle = "", image = it.coverAsset.url))
       }
     } else {
       data.latestMedia.map {
-        list.add(HorizontalItemModel(title = it.title, subTitle = "", image = it.coverAsset.url))
+        list.add(GenericRowItemModel(title = it.title, subTitle = "", image = it.coverAsset.url))
       }
     }
     return list
   }
 
-  fun mapEpisodeResponse(data: EpisodesResponseModel.Data?): List<HorizontalItemModel> {
+  fun mapEpisodeResponse(data: EpisodesResponseModel.Data?): List<GenericRowItemModel> {
     val episodes = data?.media
-    val list = arrayListOf<HorizontalItemModel>()
+    val list = arrayListOf<GenericRowItemModel>()
     if (!episodes.isNullOrEmpty()) {
       episodes.map {
         list.add(
-            HorizontalItemModel(
+            GenericRowItemModel(
                 title = it?.channel?.title ?: "",
                 subTitle = it?.title ?: "",
                 image = it?.coverAsset?.url ?: ""))
@@ -131,11 +131,11 @@ constructor(
   fun mapWholeChannelResponse(
       channel: ChannelsResponseModel.Data.Channel,
       numOfEpisodes: String
-  ): List<CustomizeResponseModel> {
+  ): List<CustomizeChannelResponseModel> {
     val channelsList =
-        mutableListOf<CustomizeResponseModel>().also {
+        mutableListOf<CustomizeChannelResponseModel>().also {
           it.add(
-              CustomizeResponseModel(
+              CustomizeChannelResponseModel(
                   title = channel.title,
                       numOfEpisodes =
                           if (numOfEpisodes.toInt() == 1) {

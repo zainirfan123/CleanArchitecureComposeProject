@@ -4,7 +4,7 @@ import com.example.mindsvalleyapplication.feature_channel.repository.FakeChannel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CoverAsset
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
-import com.example.mindsvalleyapplication.feature_channels.domain.model.HorizontalItemModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.CategoriesUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.ChannelsUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.EpisodesUseCase
@@ -195,8 +195,8 @@ class ChannelScreenViewModelTest {
 
     // Then
     val expectedList = listOf(
-      HorizontalItemModel(subTitle = "Channel 1", title = "Episode 1", image = "https://example.com/episode1.jpg"),
-      HorizontalItemModel(subTitle = "Channel 2", title =  "Episode 2", image =  "https://example.com/episode2.jpg")
+      GenericRowItemModel(subTitle = "Channel 1", title = "Episode 1", image = "https://example.com/episode1.jpg"),
+      GenericRowItemModel(subTitle = "Channel 2", title =  "Episode 2", image =  "https://example.com/episode2.jpg")
     )
     assertEquals(expectedList, result)
   }
@@ -210,7 +210,7 @@ class ChannelScreenViewModelTest {
     val result = viewModel.mapEpisodeResponse(data)
 
     // Then
-    assertEquals(emptyList<HorizontalItemModel>(), result)
+    assertEquals(emptyList<GenericRowItemModel>(), result)
   }
 
   @Test
@@ -222,7 +222,7 @@ class ChannelScreenViewModelTest {
     val result = viewModel.mapEpisodeResponse(data)
 
     // Then
-    assertEquals(emptyList<HorizontalItemModel>(), result)
+    assertEquals(emptyList<GenericRowItemModel>(), result)
   }
 
 }

@@ -3,7 +3,7 @@ package com.example.mindsvalleyapplication.feature_channels.domain.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.example.mindsvalleyapplication.feature_channels.data.data_source.RoomTypeConverter
+import com.example.mindsvalleyapplication.feature_channels.data.data_source.local.RoomTypeConverter
 
 @Entity(tableName = "episodes")
 data class EpisodesResponseModel(

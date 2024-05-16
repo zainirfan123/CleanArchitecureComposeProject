@@ -23,14 +23,14 @@ import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.mindsvalleyapplication.R
-import com.example.mindsvalleyapplication.feature_channels.domain.model.HorizontalItemModel
+import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
 object RowItems {
     @Composable
-    fun SetRowItems(list: List<HorizontalItemModel>) {
+    fun SetRowItems(list: List<GenericRowItemModel>) {
         LazyRow(modifier = Modifier.fillMaxSize().wrapContentHeight()) {
-            itemsIndexed(list) { index: Int, item: HorizontalItemModel ->
+            itemsIndexed(list) { index: Int, item: GenericRowItemModel ->
                 if (index < 6) {
                     Spacer(modifier = Modifier.width(10.dp))
                     RowItem(item = item)
@@ -41,7 +41,7 @@ object RowItems {
     }
 
     @Composable
-    fun RowItem(item: HorizontalItemModel) {
+    fun RowItem(item: GenericRowItemModel) {
         Column(
             modifier = Modifier.width(152.dp).wrapContentHeight(),
             horizontalAlignment = Alignment.Start) {

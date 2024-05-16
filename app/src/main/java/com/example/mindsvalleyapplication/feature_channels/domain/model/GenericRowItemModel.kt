@@ -1,6 +1,6 @@
 package com.example.mindsvalleyapplication.feature_channels.domain.model
 
-data class HorizontalItemModel(
+data class GenericRowItemModel(
     val image: String,
     val title: String,
     val subTitle: String

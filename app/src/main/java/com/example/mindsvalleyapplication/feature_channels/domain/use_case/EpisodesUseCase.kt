@@ -1,7 +1,6 @@
 package com.example.mindsvalleyapplication.feature_channels.domain.use_case
 
 import com.example.mindsvalleyapplication.feature_channels.common.Resource
-import com.example.mindsvalleyapplication.feature_channels.data.data_source.ChannelsDatabase
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.repository.ChannelsRepository
 import kotlinx.coroutines.flow.Flow

@@ -1,7 +1,7 @@
 package com.example.mindsvalleyapplication.feature_channels.data.repository
 
 import com.example.mindsvalleyapplication.feature_channels.data.data_source.ApiService
-import com.example.mindsvalleyapplication.feature_channels.data.data_source.ChannelsDatabase
+import com.example.mindsvalleyapplication.feature_channels.data.data_source.local.ChannelsDatabase
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.EpisodesResponseModel

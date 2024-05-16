@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channels.data.data_source
+package com.example.mindsvalleyapplication.feature_channels.data.data_source.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
