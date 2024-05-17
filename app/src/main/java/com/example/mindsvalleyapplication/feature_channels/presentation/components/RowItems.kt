@@ -1,13 +1,10 @@
 package com.example.mindsvalleyapplication.feature_channels.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Column
@@ -18,7 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -46,12 +42,12 @@ import kotlinx.coroutines.delay
 object RowItems {
     @Composable
     fun SetRowItems(list: List<GenericRowItemModel>) {
-        val lazyListState = rememberLazyListState()
+        rememberLazyListState()
         LazyRow(modifier = Modifier.fillMaxSize().wrapContentHeight()) {
             itemsIndexed(list) { index: Int, item: GenericRowItemModel ->
                 if (index < 6) {
                     Spacer(modifier = Modifier.width(10.dp))
-                    RowItem(lazyListState,item = item)
+                    RowItem(item = item)
                     Spacer(modifier = Modifier.width(10.dp))
                 }
             }
@@ -59,7 +55,7 @@ object RowItems {
     }
 
     @Composable
-    fun RowItem(lazyListState: LazyListState,item: GenericRowItemModel) {
+    fun RowItem(item: GenericRowItemModel) {
         var isVisible by remember { mutableStateOf(false) }
 
         // Trigger visibility change when the item is first composed
