@@ -1,9 +1,5 @@
 package com.example.mindsvalleyapplication.feature_channels.presentation.components
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -19,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
+import com.example.mindsvalleyapplication.utils.TestTags.ERROR_SCREEN
 
 object ComposeUtils {
 
@@ -60,12 +58,16 @@ object ComposeUtils {
   fun Divider() {
     Spacer(modifier = Modifier.height(30.dp))
     Image(
-        modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(horizontal = 20.dp),
+        modifier =
+            Modifier.fillMaxWidth()
+                .wrapContentHeight()
+                .padding(horizontal = 20.dp),
         painter = painterResource(id = R.drawable.divider),
         contentDescription = "divider",
         contentScale = ContentScale.Crop)
     Spacer(modifier = Modifier.height(10.dp))
   }
+
   @Composable
   fun LoadingScreen() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -75,7 +77,7 @@ object ComposeUtils {
 
   @Composable
   fun ErrorScreen(errorMessage: String) {
-    Box(modifier = Modifier.fillMaxSize().padding(20.dp), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize().padding(20.dp).testTag(ERROR_SCREEN), contentAlignment = Alignment.Center) {
       Text(
           text = "Error: $errorMessage",
           color = Color.Red,

@@ -8,8 +8,13 @@ import com.example.mindsvalleyapplication.feature_channels.domain.repository.Cha
 
 class FakeChannelRepository : ChannelsRepository {
 
-  val coverAsset = ChannelsResponseModel.Data.Channel.CoverAsset("")
-  val iconAsset = ChannelsResponseModel.Data.Channel.IconAsset("", "")
+  private val coverAsset =
+      ChannelsResponseModel.Data.Channel.CoverAsset(
+          "https://assets.mindvalley.com/api/v1/assets/5bdbdd0e-3bd3-432b-b8cb-3d3556c58c94.jpg?transform=w_1080")
+  private val iconAsset =
+      ChannelsResponseModel.Data.Channel.IconAsset(
+          "",
+          "https://assets.mindvalley.com/api/v1/assets/eb493421-c048-492b-a471-bed7604e95d6.jpg?transform=w_1080")
   private var latestMediaList = arrayListOf<ChannelsResponseModel.Data.Channel.LatestMedia>()
   private var seriesList = arrayListOf<ChannelsResponseModel.Data.Channel.Series>()
 
@@ -17,25 +22,28 @@ class FakeChannelRepository : ChannelsRepository {
       ChannelsResponseModel.Data.Channel(
           coverAsset = coverAsset,
           iconAsset = iconAsset,
-          id = "",
+          id = "0",
           latestMedia = getDummyLatestMediaList(),
           series = getDummySeriesList(),
-          slug = "",
-          title = "",
+          slug = "slug",
+          title = "Channel 1",
           mediaCount = 0)
-  private val categories = CategoriesResponseModel.Data.Category("")
+  private val categories = CategoriesResponseModel.Data.Category("Category A")
   private val episodes =
       EpisodesResponseModel.Data.Media(
-          channel = EpisodesResponseModel.Data.Media.Channel(title = ""),
-          coverAsset = CoverAsset(url = ""),
-          "",
-          "")
-  val channelResponseModel =
+          channel = EpisodesResponseModel.Data.Media.Channel(title = "Channel 1"),
+          coverAsset =
+              CoverAsset(
+                  url =
+                      "https://assets.mindvalley.com/api/v1/assets/5bdbdd0e-3bd3-432b-b8cb-3d3556c58c94.jpg?transform=w_1080"),
+          "Episode 1",
+          "course")
+  private val channelResponseModel =
       ChannelsResponseModel(id = 0, ChannelsResponseModel.Data(listOf(channels)))
-  val episodeResponseModel =
+  private val episodeResponseModel =
       EpisodesResponseModel(id = 0, EpisodesResponseModel.Data(listOf(episodes)))
 
-  val categoryResponseModel =
+  private val categoryResponseModel =
       CategoriesResponseModel(id = 0, CategoriesResponseModel.Data(listOf(categories)))
 
   override suspend fun getChannels(isFetchedFromRoom: Boolean): ChannelsResponseModel {
@@ -50,14 +58,14 @@ class FakeChannelRepository : ChannelsRepository {
     return episodeResponseModel
   }
 
-  fun getDummyLatestMediaList(): List<ChannelsResponseModel.Data.Channel.LatestMedia> {
+  private fun getDummyLatestMediaList(): List<ChannelsResponseModel.Data.Channel.LatestMedia> {
     latestMediaList.add(
         ChannelsResponseModel.Data.Channel.LatestMedia(
-            coverAsset = coverAsset, title = "media", type = ""))
+            coverAsset = coverAsset, title = "media", type = "course"))
     return latestMediaList
   }
 
-  fun getDummySeriesList(): List<ChannelsResponseModel.Data.Channel.Series> {
+  private fun getDummySeriesList(): List<ChannelsResponseModel.Data.Channel.Series> {
     seriesList.add(
         ChannelsResponseModel.Data.Channel.Series(
             coverAsset = coverAsset, title = "series", id = "0"))

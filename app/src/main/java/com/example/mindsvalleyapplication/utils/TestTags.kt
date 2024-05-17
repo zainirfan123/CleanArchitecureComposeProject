@@ -1,0 +1,13 @@
+package com.example.mindsvalleyapplication.utils
+
+object TestTags {
+
+  const val CHANNEL_APP_TITLE = "CHANNEL_APP_TITLE"
+  const val NEW_EPISODE_TITLE = "NEW_EPISODE_TITLE"
+  const val EPISODE_SECTION = "EPISODE_SECTION"
+  const val SERIES_OR_COURSE_SECTION = "SERIES_OR_COURSE_SECTION"
+  const val BROWSE_CATEGORY_TITLE= "BROWSE_CATEGORY_TITLE"
+  const val CATEGORY_SECTION = "CATEGORY_SECTION"
+  const val ERROR_SCREEN = "ERROR_SCREEN"
+  const val LOADING_INDICATOR = "LOADING_INDICATOR"
+}

@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
+import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.size.Scale
@@ -16,6 +17,7 @@ import com.example.mindsvalleyapplication.R
 
 object LoadImage {
 
+  @OptIn(ExperimentalCoilApi::class)
   @Composable
   fun ImageWithLoader(url: String, modifier: Modifier = Modifier) {
     val painter =

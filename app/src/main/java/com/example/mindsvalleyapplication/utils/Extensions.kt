@@ -19,6 +19,5 @@ object Extensions {
             val networkInfo = connectivityManager.activeNetworkInfo
             return networkInfo != null && networkInfo.isConnectedOrConnecting
         }
-
     }
 }

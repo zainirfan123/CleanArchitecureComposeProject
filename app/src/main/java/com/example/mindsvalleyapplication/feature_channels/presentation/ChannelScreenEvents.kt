@@ -1,4 +1,6 @@
 package com.example.mindsvalleyapplication.feature_channels.presentation
 
-class ChannelScreenEvents {
+sealed class ChannelScreenEvents {
+    data object Refresh : ChannelScreenEvents()
+
 }

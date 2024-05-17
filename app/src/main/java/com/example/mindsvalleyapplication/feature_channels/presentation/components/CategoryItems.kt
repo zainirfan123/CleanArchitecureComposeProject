@@ -21,65 +21,66 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import com.example.mindsvalleyapplication.R
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.CustomTextView
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
 object CategoryItems {
 
-    @Composable
-    fun SetCategoryItems(categoryPairs: List<Pair<String, String?>>) {
-        categoryPairs.forEach { CategoryChip(pair = it) }
-    }
-    @Composable
-    fun CategoryChip(pair: Pair<String, String?>) {
-        Row(modifier = Modifier.fillMaxWidth().wrapContentHeight().padding(10.dp)) {
-            Box(
-                modifier =
-                Modifier.height(60.dp)
-                    .weight(0.5f)
-                    .background(
-                        shape = CircleShape, color = colorResource(id = R.color.chip_bg_color)
-                    ),
-                contentAlignment = Alignment.Center) {
-                ComposeUtils.CustomTextView(
+  @Composable
+  fun SetCategoryItems(categoryPairs: List<Pair<String, String?>>) {
+    categoryPairs.forEach { CategoryChip(pair = it) }
+  }
+
+  @Composable
+  fun CategoryChip(pair: Pair<String, String?>) {
+    Row(
+        modifier =
+            Modifier.fillMaxWidth()
+                .wrapContentHeight()
+                .padding(10.dp)) {
+          Box(
+              modifier =
+                  Modifier.height(60.dp)
+                      .weight(0.5f)
+                      .background(
+                          shape = CircleShape, color = colorResource(id = R.color.chip_bg_color)),
+              contentAlignment = Alignment.Center) {
+                CustomTextView(
                     modifier =
-                    Modifier.fillMaxHeight()
-                        .padding(top = 20.dp, start = 2.dp, end = 2.dp)
-                        .align(Alignment.Center),
+                        Modifier.fillMaxHeight()
+                            .padding(top = 20.dp, start = 2.dp, end = 2.dp)
+                            .align(Alignment.Center),
                     text = pair.first,
                     textSize = 18,
                     textAlign = TextAlign.Center,
                     textColor = colorResource(id = R.color.white),
                     fontFamily = AppsFontUtils.fontBold,
                     fontWeight = FontWeight(700),
-                    letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp)
-                )
-            }
-            Spacer(modifier = Modifier.width(20.dp))
-            Box(
-                modifier =
-                Modifier.height(60.dp)
-                    .weight(0.5f)
-                    .background(
-                        shape = CircleShape, color = colorResource(id = R.color.chip_bg_color)
-                    ),
-                contentAlignment = Alignment.Center) {
+                    letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
+              }
+          Spacer(modifier = Modifier.width(20.dp))
+          Box(
+              modifier =
+                  Modifier.height(60.dp)
+                      .weight(0.5f)
+                      .background(
+                          shape = CircleShape, color = colorResource(id = R.color.chip_bg_color)),
+              contentAlignment = Alignment.Center) {
                 pair.second?.let {
-                    ComposeUtils.CustomTextView(
-                        modifier =
-                        Modifier.fillMaxHeight()
-                            .padding(top = 20.dp, start = 2.dp, end = 2.dp)
-                            .align(Alignment.Center),
-                        text = it,
-                        textSize = 18,
-                        textAlign = TextAlign.Center,
-                        textColor = colorResource(id = R.color.white),
-                        fontFamily = AppsFontUtils.fontBold,
-                        fontWeight = FontWeight(700),
-                        letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp)
-                    )
+                  CustomTextView(
+                      modifier =
+                          Modifier.fillMaxHeight()
+                              .padding(top = 20.dp, start = 2.dp, end = 2.dp)
+                              .align(Alignment.Center),
+                      text = it,
+                      textSize = 18,
+                      textAlign = TextAlign.Center,
+                      textColor = colorResource(id = R.color.white),
+                      fontFamily = AppsFontUtils.fontBold,
+                      fontWeight = FontWeight(700),
+                      letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
                 }
-            }
+              }
         }
-    }
-
+  }
 }

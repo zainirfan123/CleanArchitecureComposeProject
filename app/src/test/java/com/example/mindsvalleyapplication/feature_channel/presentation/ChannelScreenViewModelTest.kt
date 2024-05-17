@@ -1,4 +1,4 @@
-package com.example.mindsvalleyapplication.feature_channel
+package com.example.mindsvalleyapplication.feature_channel.presentation
 
 import com.example.mindsvalleyapplication.feature_channel.repository.FakeChannelRepository
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel

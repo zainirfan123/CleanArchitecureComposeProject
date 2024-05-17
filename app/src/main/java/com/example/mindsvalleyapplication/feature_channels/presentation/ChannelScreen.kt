@@ -3,15 +3,19 @@ package com.example.mindsvalleyapplication.feature_channels.presentation
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +33,7 @@ import com.example.mindsvalleyapplication.feature_channels.presentation.componen
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.RowItems.SetRowItems
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 import com.example.mindsvalleyapplication.utils.Extensions.isInternetConnected
+import com.example.mindsvalleyapplication.utils.TestTags
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
@@ -58,17 +63,13 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
     SwipeRefresh(
         state = swipeRefreshState,
         onRefresh = {
-          viewModel.callChannelApi(isFetchedFromRoom = context.isInternetConnected())
-          viewModel.callEpisodeApi(isFetchedFromRoom = context.isInternetConnected())
-          viewModel.callCategoriesApi(isFetchedFromRoom = context.isInternetConnected())
-          // After fetching data, set isRefreshing to false
-          // (either in ViewModel after successful API calls or after handling errors)
+          viewModel.handleScreenEvent(context.isInternetConnected(), ChannelScreenEvents.Refresh)
         }) {
           LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(5.dp)) {
             item {
               Spacer(modifier = Modifier.height(56.dp))
               CustomTextView(
-                  modifier = Modifier.padding(start = 10.dp),
+                  modifier = Modifier.padding(start = 10.dp).testTag(TestTags.CHANNEL_APP_TITLE),
                   text = stringResource(id = R.string.channel_title),
                   textSize = 30,
                   textColor = colorResource(id = R.color.grey),
@@ -79,7 +80,7 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
               Spacer(modifier = Modifier.height(30.dp))
 
               CustomTextView(
-                  modifier = Modifier.padding(start = 10.dp),
+                  modifier = Modifier.padding(start = 10.dp).testTag(TestTags.NEW_EPISODE_TITLE),
                   text = stringResource(id = R.string.new_episode),
                   textSize = 20,
                   textColor = colorResource(id = R.color.grey_secondary),
@@ -89,27 +90,36 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
 
               Spacer(modifier = Modifier.height(20.dp))
             }
-            item { // new episodes
-              SetRowItems(list = viewModel.mapEpisodeResponse(episodes))
-              Spacer(modifier = Modifier.height(20.dp))
+            item {
+              Column(
+                  modifier =
+                      Modifier.fillMaxWidth()
+                          .wrapContentHeight()
+                          .testTag(TestTags.EPISODE_SECTION)) {
+                    SetRowItems(list = viewModel.mapEpisodeResponse(episodes))
+                    Spacer(modifier = Modifier.height(20.dp))
+                  }
             }
             item { Divider() }
             item {
-              channel?.data?.channels?.forEach {
-                it?.let { it1 ->
-                      viewModel.mapWholeChannelResponse(
-                          channel = it1,
-                          numOfEpisodes =
-                              if (it.series.isNotEmpty()) it.series.size.toString()
-                              else it.latestMedia.size.toString())
-                    }
-                    ?.let { it2 -> SetCourseOrSeriesItems(list = it2) }
+              Column(modifier = Modifier.fillMaxSize().testTag(TestTags.SERIES_OR_COURSE_SECTION)) {
+                channel?.data?.channels?.forEach {
+                  it?.let { it1 ->
+                        viewModel.mapWholeChannelResponse(
+                            channel = it1,
+                            numOfEpisodes =
+                                if (it.series.isNotEmpty()) it.series.size.toString()
+                                else it.latestMedia.size.toString())
+                      }
+                      ?.let { it2 -> SetCourseOrSeriesItems(list = it2) }
+                }
               }
             }
 
             item {
               CustomTextView(
-                  modifier = Modifier.padding(start = 10.dp),
+                  modifier =
+                      Modifier.fillMaxWidth().wrapContentHeight().padding(start = 10.dp).testTag(TestTags.BROWSE_CATEGORY_TITLE),
                   text = stringResource(id = R.string.browse_by_categories),
                   textSize = 20,
                   textColor = colorResource(id = R.color.grey_secondary),
@@ -118,7 +128,9 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
                   letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
               Spacer(modifier = Modifier.height(10.dp))
-              categories?.categories?.let { SetCategoryItems(viewModel.mapCategoriesResponse(it)) }
+              Column(modifier = Modifier.fillMaxWidth().wrapContentHeight().testTag(TestTags.CATEGORY_SECTION)) {
+                  categories?.categories?.let { SetCategoryItems(viewModel.mapCategoriesResponse(it)) }
+              }
               Spacer(modifier = Modifier.height(30.dp))
             }
           }

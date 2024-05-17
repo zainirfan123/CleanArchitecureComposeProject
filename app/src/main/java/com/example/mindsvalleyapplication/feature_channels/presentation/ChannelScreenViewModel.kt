@@ -34,10 +34,24 @@ constructor(
   private val _categoriesState = mutableStateOf(CategoriesViewState())
   val categoriesState: State<CategoriesViewState> = _categoriesState
 
+  // Method to update episode state for testing
+
+  fun updateEpisodeStateForTesting(newState: EpisodeViewState) {
+    _episodeState.value = newState
+  }
+
   init {
-    callEpisodeApi(isFetchedFromRoom = false)
-    callChannelApi(isFetchedFromRoom = false)
-    callCategoriesApi(isFetchedFromRoom = false)
+    callApis(false)
+  }
+
+  fun handleScreenEvent(isFetchedFromRoom: Boolean, event: ChannelScreenEvents) {
+    when (event) {
+      is ChannelScreenEvents.Refresh -> {
+        // Call your API here
+        callApis(isFetchedFromRoom)
+      }
+    // Handle more screen events if needed
+    }
   }
 
   fun callChannelApi(isFetchedFromRoom: Boolean) {
@@ -97,9 +111,7 @@ constructor(
     }
   }
 
-   fun getSeriesOrCourseList(
-      data: ChannelsResponseModel.Data.Channel
-  ): List<GenericRowItemModel> {
+  fun getSeriesOrCourseList(data: ChannelsResponseModel.Data.Channel): List<GenericRowItemModel> {
     val list = arrayListOf<GenericRowItemModel>()
     if (data.series.isNotEmpty()) {
       data.series.map {
@@ -137,10 +149,10 @@ constructor(
           it.add(
               CustomizeChannelResponseModel(
                   title = channel.title,
-                      numOfEpisodes =
-                          if (numOfEpisodes.toInt() == 1) {
-                            "$numOfEpisodes episode"
-                          } else "$numOfEpisodes episodes",
+                  numOfEpisodes =
+                      if (numOfEpisodes.toInt() == 1) {
+                        "$numOfEpisodes episode"
+                      } else "$numOfEpisodes episodes",
                   slug = channel.slug,
                   items = getSeriesOrCourseList(channel)))
         }
@@ -161,5 +173,11 @@ constructor(
       }
     }
     return pairs
+  }
+
+  private fun callApis(isFetchedFromRoom: Boolean) {
+    callEpisodeApi(isFetchedFromRoom = isFetchedFromRoom)
+    callChannelApi(isFetchedFromRoom = isFetchedFromRoom)
+    callCategoriesApi(isFetchedFromRoom = isFetchedFromRoom)
   }
 }

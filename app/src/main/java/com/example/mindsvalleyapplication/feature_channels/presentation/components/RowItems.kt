@@ -1,6 +1,5 @@
 package com.example.mindsvalleyapplication.feature_channels.presentation.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,14 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
 import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
+import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.CustomTextView
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.LoadImage.ImageWithLoader
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
@@ -51,7 +49,7 @@ object RowItems {
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            ComposeUtils.CustomTextView(
+            CustomTextView(
                 modifier = Modifier.padding(start = 10.dp),
                 text = item.title,
                 textSize = 17,
@@ -62,8 +60,7 @@ object RowItems {
 
             if (item.subTitle.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(10.dp))
-
-                ComposeUtils.CustomTextView(
+                CustomTextView(
                     modifier = Modifier.width(142.dp).padding(start = 10.dp),
                     text = item.subTitle.uppercase(),
                     textSize = 13,
