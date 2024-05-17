@@ -32,13 +32,12 @@ object ChannelItems {
   fun SetCourseOrSeriesItems(list: List<CustomizeChannelResponseModel>) {
     Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
       list.forEach { item ->
-        Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
+          Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
           titleToDrawableMap[item.title]
               ?.let { painterResource(id = it) }
               ?.let {
                 Image(
-                    modifier =
-                        Modifier.width(50.dp).height(50.dp),
+                    modifier = Modifier.width(50.dp).height(50.dp),
                     painter = it,
                     contentDescription = item.title,
                     contentScale = ContentScale.Crop)
@@ -48,8 +47,7 @@ object ChannelItems {
 
           Column(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
             CustomTextView(
-                modifier =
-                    Modifier.padding(start = 10.dp, top = 5.dp),
+                modifier = Modifier.padding(start = 10.dp, top = 5.dp),
                 text = item.title,
                 textSize = 20,
                 textColor = colorResource(id = R.color.white),
@@ -57,8 +55,7 @@ object ChannelItems {
                 fontWeight = FontWeight(700),
                 letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
             CustomTextView(
-                modifier =
-                    Modifier.padding(start = 10.dp, top = 5.dp),
+                modifier = Modifier.padding(start = 10.dp, top = 5.dp),
                 text = item.numOfEpisodes,
                 textSize = 16,
                 textColor = colorResource(id = R.color.grey_secondary),
@@ -68,9 +65,10 @@ object ChannelItems {
           }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
         SetRowItems(list = item.items)
+        Spacer(modifier = Modifier.padding(top=50.dp))
         Divider()
       }
     }

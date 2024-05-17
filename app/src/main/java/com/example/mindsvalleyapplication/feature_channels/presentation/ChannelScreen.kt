@@ -100,7 +100,10 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
                     Spacer(modifier = Modifier.height(20.dp))
                   }
             }
-            item { Divider() }
+            item {
+              Spacer(modifier = Modifier.height(30.dp))
+              Divider()
+            }
             item {
               Column(modifier = Modifier.fillMaxSize().testTag(TestTags.SERIES_OR_COURSE_SECTION)) {
                 channel?.data?.channels?.forEach {
@@ -119,7 +122,7 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
             item {
               CustomTextView(
                   modifier =
-                      Modifier.fillMaxWidth().wrapContentHeight().padding(start = 10.dp).testTag(TestTags.BROWSE_CATEGORY_TITLE),
+                      Modifier.padding(start = 10.dp).testTag(TestTags.BROWSE_CATEGORY_TITLE),
                   text = stringResource(id = R.string.browse_by_categories),
                   textSize = 20,
                   textColor = colorResource(id = R.color.grey_secondary),
@@ -128,9 +131,15 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
                   letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
               Spacer(modifier = Modifier.height(10.dp))
-              Column(modifier = Modifier.fillMaxWidth().wrapContentHeight().testTag(TestTags.CATEGORY_SECTION)) {
-                  categories?.categories?.let { SetCategoryItems(viewModel.mapCategoriesResponse(it)) }
-              }
+              Column(
+                  modifier =
+                      Modifier.fillMaxWidth()
+                          .wrapContentHeight()
+                          .testTag(TestTags.CATEGORY_SECTION)) {
+                    categories?.categories?.let {
+                      SetCategoryItems(viewModel.mapCategoriesResponse(it))
+                    }
+                  }
               Spacer(modifier = Modifier.height(30.dp))
             }
           }

@@ -39,6 +39,7 @@ class ChannelScreenTest {
 
   @Before
   fun setUp() {
+    hiltRule.inject()
     fakeChannelRepository = FakeChannelRepository()
     viewModel =
         ChannelScreenViewModel(
@@ -46,7 +47,6 @@ class ChannelScreenTest {
             episodesUseCase = EpisodesUseCase(fakeChannelRepository),
             categoriesUseCase = CategoriesUseCase(fakeChannelRepository))
 
-    hiltRule.inject()
     composeRule.activity.setContent {
       val navController = rememberNavController()
       MindsValleyApplicationTheme {

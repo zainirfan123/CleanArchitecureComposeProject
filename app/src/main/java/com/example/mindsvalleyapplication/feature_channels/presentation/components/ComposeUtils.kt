@@ -56,12 +56,11 @@ object ComposeUtils {
 
   @Composable
   fun Divider() {
-    Spacer(modifier = Modifier.height(30.dp))
     Image(
         modifier =
             Modifier.fillMaxWidth()
                 .wrapContentHeight()
-                .padding(horizontal = 20.dp),
+                .padding(horizontal = 5.dp),
         painter = painterResource(id = R.drawable.divider),
         contentDescription = "divider",
         contentScale = ContentScale.Crop)
