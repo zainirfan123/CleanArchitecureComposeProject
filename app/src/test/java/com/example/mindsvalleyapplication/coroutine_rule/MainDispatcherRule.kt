@@ -1,4 +1,4 @@
-package com.example.testproject2024.coroutine_rule
+package com.example.mindsvalleyapplication.coroutine_rule
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,5 +1,6 @@
 package com.example.mindsvalleyapplication.feature_channel.presentation
 
+import com.example.mindsvalleyapplication.coroutine_rule.MainDispatcherRule
 import com.example.mindsvalleyapplication.feature_channel.repository.FakeChannelRepository
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
@@ -10,7 +11,6 @@ import com.example.mindsvalleyapplication.feature_channels.domain.use_case.Categ
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.ChannelsUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.EpisodesUseCase
 import com.example.mindsvalleyapplication.feature_channels.presentation.ChannelScreenViewModel
-import com.example.testproject2024.coroutine_rule.MainDispatcherRule
 import junit.framework.TestCase
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.*
