@@ -33,9 +33,6 @@ constructor(
 
   private val _categoriesState = mutableStateOf(CategoriesViewState())
   val categoriesState: State<CategoriesViewState> = _categoriesState
-
-  // Method to update episode state for testing
-
   init {
     fetchAllContent(false)
   }
@@ -50,7 +47,7 @@ constructor(
     }
   }
 
-  fun callChannelApi(isFetchedFromRoom: Boolean) {
+  private fun callChannelApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       channelUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
@@ -69,7 +66,7 @@ constructor(
     }
   }
 
-  fun callEpisodeApi(isFetchedFromRoom: Boolean) {
+  private fun callEpisodeApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       episodesUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
@@ -88,7 +85,7 @@ constructor(
     }
   }
 
-  fun callCategoriesApi(isFetchedFromRoom: Boolean) {
+ private fun callCategoriesApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       categoriesUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
