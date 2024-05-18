@@ -47,7 +47,7 @@ constructor(
     }
   }
 
-  private fun callChannelApi(isFetchedFromRoom: Boolean) {
+  fun callChannelApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       channelUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
@@ -66,7 +66,7 @@ constructor(
     }
   }
 
-  private fun callEpisodeApi(isFetchedFromRoom: Boolean) {
+  fun callEpisodeApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       episodesUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
@@ -85,7 +85,7 @@ constructor(
     }
   }
 
- private fun callCategoriesApi(isFetchedFromRoom: Boolean) {
+ fun callCategoriesApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
       categoriesUseCase.invoke(!isFetchedFromRoom).collect { result ->
         when (result) {
