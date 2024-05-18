@@ -6,8 +6,8 @@ import android.net.NetworkCapabilities
 import android.os.Build
 
 object Extensions {
-
     fun Context.isInternetConnected(): Boolean {
+        /* This method help to identify if internet connection established or not */
         val connectivityManager =
             this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

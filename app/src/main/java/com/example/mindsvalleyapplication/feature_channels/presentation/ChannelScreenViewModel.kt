@@ -37,14 +37,14 @@ constructor(
   // Method to update episode state for testing
 
   init {
-    callApis(false)
+    fetchAllContent(false)
   }
 
   fun handleScreenEvent(isFetchedFromRoom: Boolean, event: ChannelScreenEvents) {
     when (event) {
       is ChannelScreenEvents.Refresh -> {
         // Call your API here
-        callApis(isFetchedFromRoom)
+        fetchAllContent(isFetchedFromRoom)
       }
     // Handle more screen events if needed
     }
@@ -108,6 +108,7 @@ constructor(
   }
 
   fun getSeriesOrCourseList(data: ChannelsResponseModel.Data.Channel): List<GenericRowItemModel> {
+    /* This method helps to map series or course. */
     val list = arrayListOf<GenericRowItemModel>()
     if (data.series.isNotEmpty()) {
       data.series.map {
@@ -122,6 +123,7 @@ constructor(
   }
 
   fun mapEpisodeResponse(data: EpisodesResponseModel.Data?): List<GenericRowItemModel> {
+    /* This method help map episode response */
     val episodes = data?.media
     val list = arrayListOf<GenericRowItemModel>()
     if (!episodes.isNullOrEmpty()) {
@@ -140,6 +142,7 @@ constructor(
       channel: ChannelsResponseModel.Data.Channel,
       numOfEpisodes: String
   ): List<CustomizeChannelResponseModel> {
+    /* This method help map whole channel response. */
     val channelsList =
         mutableListOf<CustomizeChannelResponseModel>().also {
           it.add(
@@ -158,6 +161,7 @@ constructor(
   fun mapCategoriesResponse(
       list: List<CategoriesResponseModel.Data.Category>?
   ): List<Pair<String, String?>> {
+    /* This method help to create pair of categories */
     val pairs = mutableListOf<Pair<String, String?>>()
     list?.let {
       for (i in it.indices step 2) {
@@ -171,7 +175,8 @@ constructor(
     return pairs
   }
 
-  private fun callApis(isFetchedFromRoom: Boolean) {
+  private fun fetchAllContent(isFetchedFromRoom: Boolean) {
+    /* This method helps to fetch all data either from server or local db */
     callEpisodeApi(isFetchedFromRoom = isFetchedFromRoom)
     callChannelApi(isFetchedFromRoom = isFetchedFromRoom)
     callCategoriesApi(isFetchedFromRoom = isFetchedFromRoom)
