@@ -33,7 +33,7 @@ object ChannelItems {
     Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
       list.forEach { item ->
           Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
-          titleToDrawableMap[item.title]
+          getChannelIconForTitle(item.title)
               ?.let { painterResource(id = it) }
               ?.let {
                 Image(
@@ -87,4 +87,9 @@ object ChannelItems {
           "Little Humans" to R.drawable.mind_valley_mentoring,
           "Unlimited Abundance" to R.drawable.mind_valley_mentoring,
       )
+
+   private fun getChannelIconForTitle(title: String): Int {
+        val defaultDrawable = R.drawable.mind_valley_mentoring
+        return titleToDrawableMap.getOrElse(title) { defaultDrawable }
+    }
 }

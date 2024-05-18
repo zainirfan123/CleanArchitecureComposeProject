@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
+import com.example.mindsvalleyapplication.utils.TestTags
 import com.example.mindsvalleyapplication.utils.TestTags.ERROR_SCREEN
 
 object ComposeUtils {
@@ -69,7 +70,7 @@ object ComposeUtils {
 
   @Composable
   fun LoadingScreen() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = Modifier.fillMaxSize().testTag(TestTags.LOADING_INDICATOR), contentAlignment = Alignment.Center) {
       CircularProgressIndicator()
     }
   }
