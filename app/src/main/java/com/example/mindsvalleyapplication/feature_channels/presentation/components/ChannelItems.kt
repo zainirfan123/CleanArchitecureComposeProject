@@ -32,16 +32,12 @@ object ChannelItems {
   fun SetCourseOrSeriesItems(list: List<CustomizeChannelResponseModel>) {
     Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
       list.forEach { item ->
-          Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
-          getChannelIconForTitle(item.title)
-              ?.let { painterResource(id = it) }
-              ?.let {
-                Image(
-                    modifier = Modifier.width(50.dp).height(50.dp),
-                    painter = it,
-                    contentDescription = item.title,
-                    contentScale = ContentScale.Crop)
-              }
+        Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
+          Image(
+              modifier = Modifier.width(50.dp).height(50.dp),
+              painter = painterResource(id = getChannelIconForTitle(item.title)),
+              contentDescription = item.title,
+              contentScale = ContentScale.Crop)
 
           Spacer(modifier = Modifier.height(20.dp))
 
@@ -68,7 +64,7 @@ object ChannelItems {
         Spacer(modifier = Modifier.height(10.dp))
 
         SetRowItems(list = item.items)
-        Spacer(modifier = Modifier.padding(top=50.dp))
+        Spacer(modifier = Modifier.padding(top = 50.dp))
         Divider()
       }
     }
@@ -88,8 +84,8 @@ object ChannelItems {
           "Unlimited Abundance" to R.drawable.mind_valley_mentoring,
       )
 
-   private fun getChannelIconForTitle(title: String): Int {
-        val defaultDrawable = R.drawable.mind_valley_mentoring
-        return titleToDrawableMap.getOrElse(title) { defaultDrawable }
-    }
+  private fun getChannelIconForTitle(title: String): Int {
+    val defaultDrawable = R.drawable.mind_valley_mentoring
+    return titleToDrawableMap.getOrElse(title) { defaultDrawable }
+  }
 }
