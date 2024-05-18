@@ -60,7 +60,7 @@ object RowItems {
 
         // Trigger visibility change when the item is first composed
         LaunchedEffect(Unit) {
-            delay(timeMillis = 250)
+            delay(timeMillis = 20)
             isVisible = true
         }
 
@@ -68,12 +68,12 @@ object RowItems {
             visible = isVisible,
             enter = slideInHorizontally(
                 initialOffsetX = { fullWidth -> -fullWidth },
-                animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing)
-            ) + fadeIn(animationSpec = tween(durationMillis = 1000)),
+                animationSpec = tween(durationMillis = 500, easing = LinearOutSlowInEasing)
+            ) + fadeIn(animationSpec = tween(durationMillis = 500)),
             exit = slideOutHorizontally(
                 targetOffsetX = { fullWidth -> fullWidth },
-                animationSpec = tween(durationMillis = 1000, easing = LinearOutSlowInEasing)
-            ) + fadeOut(animationSpec = tween(durationMillis = 1000))
+                animationSpec = tween(durationMillis = 900, easing = LinearOutSlowInEasing)
+            ) + fadeOut(animationSpec = tween(durationMillis = 900))
         ){
             Column(
                 modifier = Modifier.width(152.dp).wrapContentHeight(),

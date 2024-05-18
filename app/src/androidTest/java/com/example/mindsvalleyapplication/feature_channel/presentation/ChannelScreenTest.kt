@@ -21,6 +21,7 @@ import com.example.mindsvalleyapplication.utils.TestTags
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -82,13 +83,12 @@ class ChannelScreenTest {
   }
 
   @Test
-  fun checkBrowseCategoryTitle_isVisible() {
-    // Update the ViewModel state
+  fun checkBrowseCategoryTitle_isVisible() = runTest {
     composeRule.onNodeWithTag(TestTags.BROWSE_CATEGORY_TITLE).assertIsDisplayed()
   }
 
   @Test
-  fun checkCategorySection_isVisible() {
+  fun checkCategorySection_isVisible() = runTest {
     // Update the ViewModel state
     composeRule.onNodeWithTag(TestTags.CATEGORY_SECTION).assertIsDisplayed()
   }

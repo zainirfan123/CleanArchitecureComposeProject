@@ -36,10 +36,6 @@ constructor(
 
   // Method to update episode state for testing
 
-  fun updateEpisodeStateForTesting(newState: EpisodeViewState) {
-    _episodeState.value = newState
-  }
-
   init {
     callApis(false)
   }
