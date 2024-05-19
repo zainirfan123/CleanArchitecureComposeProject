@@ -224,8 +224,8 @@ class  ChannelScreenViewModelTest {
     // Then
     val expectedList =
         listOf(
-            GenericRowItemModel("https://example.com/episode1.jpg", "Channel 1", "Episode 1"),
-            GenericRowItemModel("https://example.com/episode2.jpg", "Channel 2", "Episode 2"))
+            GenericRowItemModel("https://example.com/episode1.jpg", "Channel 1", "Episode 1",false),
+            GenericRowItemModel("https://example.com/episode2.jpg", "Channel 2", "Episode 2",false))
     assertEquals(expectedList, result)
   }
 
