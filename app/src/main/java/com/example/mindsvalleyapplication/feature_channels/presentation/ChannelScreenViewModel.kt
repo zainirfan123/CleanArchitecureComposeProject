@@ -49,7 +49,7 @@ constructor(
 
   fun callChannelApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      channelUseCase.invoke(!isFetchedFromRoom).collect { result ->
+      channelUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _state.value = ChannelViewState(isLoading = true)
@@ -68,7 +68,7 @@ constructor(
 
   fun callEpisodeApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      episodesUseCase.invoke(!isFetchedFromRoom).collect { result ->
+      episodesUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _episodeState.value = EpisodeViewState(isLoading = true)
@@ -87,7 +87,7 @@ constructor(
 
  fun callCategoriesApi(isFetchedFromRoom: Boolean) {
     viewModelScope.launch {
-      categoriesUseCase.invoke(!isFetchedFromRoom).collect { result ->
+      categoriesUseCase.invoke(isFetchedFromRoom).collect { result ->
         when (result) {
           is Resource.Loading -> {
             _categoriesState.value = CategoriesViewState(isLoading = true)
@@ -109,11 +109,11 @@ constructor(
     val list = arrayListOf<GenericRowItemModel>()
     if (data.series.isNotEmpty()) {
       data.series.map {
-        list.add(GenericRowItemModel(title = it.title, subTitle = "", image = it.coverAsset.url))
+        list.add(GenericRowItemModel(title = it.title, subTitle = "", image = it.coverAsset.url, isSeries = true))
       }
     } else {
       data.latestMedia.map {
-        list.add(GenericRowItemModel(title = it.title, subTitle = "", image = it.coverAsset.url))
+        list.add(GenericRowItemModel(title = it.title, subTitle = "", image = it.coverAsset.url, isSeries = false))
       }
     }
     return list
@@ -129,7 +129,8 @@ constructor(
             GenericRowItemModel(
                 title = it?.channel?.title ?: "",
                 subTitle = it?.title ?: "",
-                image = it?.coverAsset?.url ?: ""))
+                image = it?.coverAsset?.url ?: "",
+                isSeries = false))
       }
     }
     return list

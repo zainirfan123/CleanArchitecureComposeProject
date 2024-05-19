@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -31,6 +32,7 @@ import com.example.mindsvalleyapplication.feature_channels.presentation.componen
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.Divider
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.ErrorScreen
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.RowItems.SetRowItems
+import com.example.mindsvalleyapplication.ui.theme.dimens
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 import com.example.mindsvalleyapplication.utils.Extensions.isInternetConnected
 import com.example.mindsvalleyapplication.utils.TestTags
@@ -67,22 +69,22 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
         }) {
           LazyColumn(modifier = Modifier.fillMaxSize(), contentPadding = PaddingValues(5.dp)) {
             item {
-              Spacer(modifier = Modifier.height(56.dp))
+              Spacer(modifier = Modifier.height(MaterialTheme.dimens.channelTitleTopSpace))
               CustomTextView(
-                  modifier = Modifier.padding(start = 10.dp).testTag(TestTags.CHANNEL_APP_TITLE),
+                  modifier = Modifier.padding(start = MaterialTheme.dimens.channelIconStartSpace).testTag(TestTags.CHANNEL_APP_TITLE),
                   text = stringResource(id = R.string.channel_title),
-                  textSize = 30,
+                  textSize = MaterialTheme.typography.headlineLarge.fontSize,
                   textColor = colorResource(id = R.color.grey),
                   fontFamily = AppsFontUtils.fontBold,
                   fontWeight = FontWeight(weight = 900),
                   letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
-              Spacer(modifier = Modifier.height(30.dp))
+              Spacer(modifier = Modifier.height(MaterialTheme.dimens.newEpisodeTitleTopSpace))
 
               CustomTextView(
-                  modifier = Modifier.padding(start = 10.dp).testTag(TestTags.NEW_EPISODE_TITLE),
+                  modifier = Modifier.padding(start = MaterialTheme.dimens.channelIconStartSpace).testTag(TestTags.NEW_EPISODE_TITLE),
                   text = stringResource(id = R.string.new_episode),
-                  textSize = 20,
+                  textSize = MaterialTheme.typography.bodyLarge.fontSize,
                   textColor = colorResource(id = R.color.grey_secondary),
                   fontFamily = AppsFontUtils.fontBold,
                   fontWeight = FontWeight(weight = 800),
@@ -122,15 +124,15 @@ private fun InitializeChannelUI(viewModel: ChannelScreenViewModel) {
             item {
               CustomTextView(
                   modifier =
-                      Modifier.padding(start = 10.dp).testTag(TestTags.BROWSE_CATEGORY_TITLE),
+                      Modifier.padding(start = MaterialTheme.dimens.channelIconStartSpace).testTag(TestTags.BROWSE_CATEGORY_TITLE),
                   text = stringResource(id = R.string.browse_by_categories),
-                  textSize = 20,
+                  textSize = MaterialTheme.typography.bodyLarge.fontSize,
                   textColor = colorResource(id = R.color.grey_secondary),
                   fontFamily = AppsFontUtils.fontBold,
                   fontWeight = FontWeight(weight = 800),
                   letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
 
-              Spacer(modifier = Modifier.height(10.dp))
+              Spacer(modifier = Modifier.height(MaterialTheme.dimens.spacingBetweenItems))
               Column(
                   modifier =
                       Modifier.fillMaxWidth()

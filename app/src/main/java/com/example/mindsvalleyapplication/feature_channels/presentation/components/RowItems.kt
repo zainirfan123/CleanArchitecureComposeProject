@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,6 +37,7 @@ import com.example.mindsvalleyapplication.R
 import com.example.mindsvalleyapplication.feature_channels.domain.model.GenericRowItemModel
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.CustomTextView
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.LoadImage.ImageWithLoader
+import com.example.mindsvalleyapplication.ui.theme.dimens
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 import kotlinx.coroutines.delay
 
@@ -46,9 +48,9 @@ object RowItems {
         LazyRow(modifier = Modifier.fillMaxSize().wrapContentHeight()) {
             itemsIndexed(list) { index: Int, item: GenericRowItemModel ->
                 if (index < 6) {
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(MaterialTheme.dimens.spacingBetweenItems))
                     RowItem(item = item)
-                    Spacer(modifier = Modifier.width(10.dp))
+                    Spacer(modifier = Modifier.width(MaterialTheme.dimens.spacingBetweenItems))
                 }
             }
         }
@@ -76,21 +78,21 @@ object RowItems {
             ) + fadeOut(animationSpec = tween(durationMillis = 900))
         ){
             Column(
-                modifier = Modifier.width(152.dp).wrapContentHeight(),
+                modifier = Modifier.width(if(item.isSeries) MaterialTheme.dimens.channelImageForSeriesWidth else MaterialTheme.dimens.channelImageWidth).wrapContentHeight(),
                 horizontalAlignment = Alignment.Start
             ) {
 
                 ImageWithLoader(
                     item.image,
-                    Modifier.fillMaxWidth().height(228.dp).clip(RoundedCornerShape(10.dp))
-                )
+                    Modifier.fillMaxWidth().height(if(item.isSeries) MaterialTheme.dimens.channelImageForSeriesHeight else MaterialTheme.dimens.channelImageHeight).clip(RoundedCornerShape(10.dp))
+                , type = item.isSeries)
 
                 Spacer(modifier = Modifier.padding(top = 20.dp))
 
                 CustomTextView(
                     modifier = Modifier.padding(start = 10.dp),
                     text = item.title,
-                    textSize = 17,
+                    textSize = MaterialTheme.typography.titleMedium.fontSize,
                     textColor = colorResource(id = R.color.white),
                     fontFamily = AppsFontUtils.fontBold,
                     letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp)
@@ -101,7 +103,7 @@ object RowItems {
                     CustomTextView(
                         modifier = Modifier.width(142.dp).padding(start = 10.dp),
                         text = item.subTitle.uppercase(),
-                        textSize = 13,
+                        textSize = MaterialTheme.typography.labelMedium.fontSize,
                         textColor = colorResource(id = R.color.grey_secondary),
                         fontFamily = AppsFontUtils.fontBold,
                         letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp)

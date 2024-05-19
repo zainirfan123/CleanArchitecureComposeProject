@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -17,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,7 +37,7 @@ object ComposeUtils {
   fun CustomTextView(
       text: String,
       modifier: Modifier = Modifier,
-      textSize: Int = 16,
+      textSize: TextUnit = MaterialTheme.typography.titleMedium.fontSize,
       textColor: Color = Color.Black,
       textAlign: TextAlign? = TextAlign.Start,
       fontFamily: FontFamily? = null,
@@ -45,7 +47,7 @@ object ComposeUtils {
     Text(
         text = text,
         modifier = modifier,
-        fontSize = textSize.sp,
+        fontSize = textSize,
         color = textColor,
         textAlign = textAlign,
         fontFamily = fontFamily,

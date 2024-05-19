@@ -14,10 +14,10 @@ object Extensions {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val network = connectivityManager.activeNetwork
             val capabilities = connectivityManager.getNetworkCapabilities(network)
-            return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+            return capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) != true
         } else {
             val networkInfo = connectivityManager.activeNetworkInfo
-            return networkInfo != null && networkInfo.isConnectedOrConnecting
+            return !(networkInfo != null && networkInfo.isConnectedOrConnecting)
         }
     }
 }

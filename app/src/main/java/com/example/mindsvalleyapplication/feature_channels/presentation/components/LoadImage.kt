@@ -22,7 +22,7 @@ import com.example.mindsvalleyapplication.R
 object LoadImage {
 
   @Composable
-  fun ImageWithLoader(url: String, modifier: Modifier = Modifier) {
+  fun ImageWithLoader(url: String, modifier: Modifier = Modifier,type:Boolean) {
 
     Box(modifier = modifier) {
       SubcomposeAsyncImage(
@@ -40,14 +40,14 @@ object LoadImage {
           loading = {
             CircularProgressIndicator(
                 color = colorResource(id = R.color.progress_color),
-                modifier = Modifier.width(50.dp).height(50.dp).align(Alignment.Center))
+                modifier = Modifier.width(20.dp).height(20.dp).align(Alignment.Center))
           },
           error = {
               Image(
                   painter = painterResource(id = R.drawable.no_image_loaded),
                   contentDescription = null,
                   modifier = Modifier.fillMaxSize(),
-                  contentScale = ContentScale.Crop
+                  contentScale = if(type) ContentScale.FillBounds else ContentScale.Crop
               )
           })
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,6 +25,7 @@ import com.example.mindsvalleyapplication.feature_channels.domain.model.Customiz
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.CustomTextView
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.ComposeUtils.Divider
 import com.example.mindsvalleyapplication.feature_channels.presentation.components.RowItems.SetRowItems
+import com.example.mindsvalleyapplication.ui.theme.dimens
 import com.example.mindsvalleyapplication.utils.AppsFontUtils
 
 object ChannelItems {
@@ -33,27 +35,28 @@ object ChannelItems {
     Column(modifier = Modifier.fillMaxSize().padding(10.dp)) {
       list.forEach { item ->
         Row(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
-          Image(
-              modifier = Modifier.width(50.dp).height(50.dp),
+            Spacer(modifier = Modifier.width(MaterialTheme.dimens.channelIconStartSpace))
+            Image(
+              modifier = Modifier.width(MaterialTheme.dimens.channelIconSize).height(MaterialTheme.dimens.channelIconSize),
               painter = painterResource(id = getChannelIconForTitle(item.title)),
               contentDescription = item.title,
               contentScale = ContentScale.Crop)
 
-          Spacer(modifier = Modifier.height(20.dp))
+          Spacer(modifier = Modifier.height(MaterialTheme.dimens.channelIconTopSpace))
 
           Column(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
             CustomTextView(
-                modifier = Modifier.padding(start = 10.dp, top = 5.dp),
+                modifier = Modifier.padding(start = MaterialTheme.dimens.channelIconEndSpace, top = 5.dp),
                 text = item.title,
-                textSize = 20,
+                textSize = MaterialTheme.typography.bodyLarge.fontSize,
                 textColor = colorResource(id = R.color.white),
                 fontFamily = AppsFontUtils.fontBold,
                 fontWeight = FontWeight(700),
                 letterSpacing = TextUnit(value = 0.4f, TextUnitType.Sp))
             CustomTextView(
-                modifier = Modifier.padding(start = 10.dp, top = 5.dp),
+                modifier = Modifier.padding(start = MaterialTheme.dimens.channelIconEndSpace, top = 5.dp),
                 text = item.numOfEpisodes,
-                textSize = 16,
+                textSize = MaterialTheme.typography.bodySmall.fontSize,
                 textColor = colorResource(id = R.color.grey_secondary),
                 fontFamily = AppsFontUtils.fontBold,
                 fontWeight = FontWeight(600),
@@ -61,7 +64,7 @@ object ChannelItems {
           }
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(MaterialTheme.dimens.channelTopSpace))
 
         SetRowItems(list = item.items)
         Spacer(modifier = Modifier.padding(top = 50.dp))
