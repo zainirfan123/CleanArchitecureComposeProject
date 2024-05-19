@@ -4,11 +4,13 @@ import androidx.activity.compose.setContent
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.mindsvalleyapplication.di.AppModule
 import com.example.mindsvalleyapplication.feature_channel.repository.FakeChannelRepository
+import com.example.mindsvalleyapplication.feature_channels.common.Constants
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.CategoriesUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.ChannelsUseCase
 import com.example.mindsvalleyapplication.feature_channels.domain.use_case.EpisodesUseCase
@@ -37,6 +39,7 @@ class ChannelScreenTest {
   private lateinit var fakeChannelRepository: FakeChannelRepository
 
   private lateinit var viewModel: ChannelScreenViewModel
+  private val savedStateHandle = SavedStateHandle(mapOf(Constants.PARAM_IS_FETCH_FROM_DB to true))
 
   @Before
   fun setUp() {
@@ -46,7 +49,8 @@ class ChannelScreenTest {
         ChannelScreenViewModel(
             channelUseCase = ChannelsUseCase(fakeChannelRepository),
             episodesUseCase = EpisodesUseCase(fakeChannelRepository),
-            categoriesUseCase = CategoriesUseCase(fakeChannelRepository))
+            categoriesUseCase = CategoriesUseCase(fakeChannelRepository),
+            savedStateHandle)
 
     composeRule.activity.setContent {
       val navController = rememberNavController()
@@ -92,5 +96,4 @@ class ChannelScreenTest {
     // Update the ViewModel state
     composeRule.onNodeWithTag(TestTags.CATEGORY_SECTION).assertIsDisplayed()
   }
-
 }

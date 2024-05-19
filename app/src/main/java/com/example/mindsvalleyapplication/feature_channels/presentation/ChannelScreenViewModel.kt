@@ -2,8 +2,10 @@ package com.example.mindsvalleyapplication.feature_channels.presentation
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.mindsvalleyapplication.feature_channels.common.Constants
 import com.example.mindsvalleyapplication.feature_channels.common.Resource
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
@@ -16,6 +18,7 @@ import com.example.mindsvalleyapplication.feature_channels.domain.use_case.Episo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.selects.SelectInstance
 
 @HiltViewModel
 class ChannelScreenViewModel
@@ -23,7 +26,8 @@ class ChannelScreenViewModel
 constructor(
     private val channelUseCase: ChannelsUseCase,
     private val episodesUseCase: EpisodesUseCase,
-    private val categoriesUseCase: CategoriesUseCase
+    private val categoriesUseCase: CategoriesUseCase,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
   private val _state = mutableStateOf(ChannelViewState())
   val state: State<ChannelViewState> = _state
@@ -34,7 +38,9 @@ constructor(
   private val _categoriesState = mutableStateOf(CategoriesViewState())
   val categoriesState: State<CategoriesViewState> = _categoriesState
   init {
-    fetchAllContent(false)
+      savedStateHandle.get<Boolean>(Constants.PARAM_IS_FETCH_FROM_DB)?.let {isFetchFromDB->
+          fetchAllContent(isFetchFromDB)
+      }
   }
 
   fun handleScreenEvent(isFetchedFromRoom: Boolean, event: ChannelScreenEvents) {

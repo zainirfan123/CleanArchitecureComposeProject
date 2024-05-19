@@ -1,7 +1,9 @@
 package com.example.mindsvalleyapplication.feature_channel.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import com.example.mindsvalleyapplication.coroutine_rule.MainDispatcherRule
 import com.example.mindsvalleyapplication.feature_channel.repository.FakeChannelRepository
+import com.example.mindsvalleyapplication.feature_channels.common.Constants
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CategoriesResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.ChannelsResponseModel
 import com.example.mindsvalleyapplication.feature_channels.domain.model.CoverAsset
@@ -28,6 +30,7 @@ class  ChannelScreenViewModelTest {
   private lateinit var fakeChannelRepository: FakeChannelRepository
 
   private lateinit var viewModel: ChannelScreenViewModel
+   private val savedStateHandle = SavedStateHandle(mapOf(Constants.PARAM_IS_FETCH_FROM_DB to true))
 
   @Before
   fun setUp() {
@@ -36,7 +39,8 @@ class  ChannelScreenViewModelTest {
         ChannelScreenViewModel(
             channelUseCase = ChannelsUseCase(fakeChannelRepository),
             episodesUseCase = EpisodesUseCase(fakeChannelRepository),
-            categoriesUseCase = CategoriesUseCase(fakeChannelRepository))
+            categoriesUseCase = CategoriesUseCase(fakeChannelRepository),
+            savedStateHandle)
   }
 
   @Test
