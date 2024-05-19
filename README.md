@@ -27,6 +27,7 @@
 - Caches images for faster loading and reduced network usage.
 - Animation on scroll episodes, series, or course.
 - Swipe to referesh the content.
+- Make responsive apps for all phones and tablets.
 
 ## Minimum SDK Version
 The company specified a minimum SDK version of 19. However, Jetpack Compose requires a minimum SDK version of 21. Therefore, the minimum SDK version for this project is set to 21 to utilize Jetpack Compose features.
