@@ -41,14 +41,12 @@ fun Navigation() {
   val navController = rememberNavController()
   val isFetchFromDB = context.isInternetConnected()
   NavHost(
-    navController = navController,
-    startDestination = Screen.Channels.route + "?isFetchFromDB=$isFetchFromDB"
-  ) {
-    composable(
-      route = Screen.Channels.route + "?isFetchFromDB={isFetchFromDB}",
-      arguments = listOf(navArgument("isFetchFromDB") { type = NavType.BoolType })
-    ) {
-      ChannelScreen(navController = navController)
-    }
-  }
+      navController = navController,
+      startDestination = Screen.Channels.route + "?isFetchFromDB=$isFetchFromDB") {
+        composable(
+            route = Screen.Channels.route + "?isFetchFromDB={isFetchFromDB}",
+            arguments = listOf(navArgument("isFetchFromDB") { type = NavType.BoolType })) {
+              ChannelScreen(navController = navController)
+            }
+      }
 }
